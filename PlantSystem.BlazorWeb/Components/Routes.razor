@@ -1,11 +1,18 @@
 ﻿@using PlantSystem.BlazorWeb.Components.Account.Shared
-<Router AppAssembly="typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
-            <NotAuthorized>
-                <RedirectToLogin />
-            </NotAuthorized>
-        </AuthorizeRouteView>
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
-    </Found>
-</Router>
+
+<ThemeProvider Theme=@BlazoriseTheme>
+    <Router AppAssembly=@typeof(Program).Assembly>
+        <Found Context="route_data">
+            <AuthorizeRouteView RouteData=@route_data DefaultLayout=@typeof(Layout.MainLayout)>
+                <NotAuthorized>
+                    <RedirectToLogin />
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+    </Router>
+</ThemeProvider>
+
+@code
+{
+    public Theme BlazoriseTheme { get; } = new();
+}
