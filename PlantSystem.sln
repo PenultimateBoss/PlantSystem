@@ -1,9 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "PlantSystem.IoT", "PlantSystem.IoT\PlantSystem.IoT.nfproj", "{1B991A14-9B03-4B85-A90B-B8A6E484BB79}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B991A14-9B03-4B85-A90B-B8A6E484BB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B991A14-9B03-4B85-A90B-B8A6E484BB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B991A14-9B03-4B85-A90B-B8A6E484BB79}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1B991A14-9B03-4B85-A90B-B8A6E484BB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B991A14-9B03-4B85-A90B-B8A6E484BB79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B991A14-9B03-4B85-A90B-B8A6E484BB79}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
