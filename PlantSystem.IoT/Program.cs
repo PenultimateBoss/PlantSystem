@@ -1,10 +1,8 @@
 #nullable enable
 
 using System;
-using System.Device.Adc;
-using Iot.Device.DHTxx.Esp32;
+using System.Threading;
 using nanoFramework.Networking;
-using nanoFramework.Hardware.Esp32;
 
 namespace PlantSystem.IoT
 {
@@ -12,23 +10,29 @@ namespace PlantSystem.IoT
     {
         public static void Main()
         {
-            Console.WriteLine("Start");
-            AdcController adc = new();
-            AdcChannel photoresistor = adc.OpenChannel(4);
-            AdcChannel moisture = adc.OpenChannel(5);
-            Dht11 dht11 = new(25, 26);
+            byte measuring_period = 1;
+            WifiNetworkHelper.ConnectDhcp("CISPE-PHONE", "11111111");
             while(true)
             {
-                Console.WriteLine("Gathering data...");
-                Console.WriteLine($"Light: {photoresistor.ReadRatio() * 100}%");
-                Console.WriteLine($"Moisture: {moisture.ReadRatio() * 100}%");
-                Console.WriteLine($"Temperature: {dht11.Temperature.DegreesCelsius}C");
-                Console.WriteLine($"Humidity: {dht11.Humidity.Percent}%");
-
-                Console.WriteLine("LightSleep");
-                WifiNetworkHelper.Disconnect();
-                Sleep.EnableWakeupByTimer(TimeSpan.FromSeconds(10));
-                Sleep.StartLightSleep();
+                PlantSensors.Instance.GetAllData(out byte light, out byte moisture, out byte temperature, out byte humidity);
+                byte[] message = new byte[]
+                {
+                    light,
+                    moisture,
+                    temperature,
+                    humidity,
+                    measuring_period,
+                };
+                MqttManager.Instance.SendReceive(message, out byte[]? response);
+                if(response is not null && response.Length >= 1)
+                {
+                    measuring_period = response[0];
+                    if(measuring_period <= 0)
+                    {
+                        measuring_period = 1;
+                    }
+                }
+                Thread.Sleep(TimeSpan.FromMinutes(measuring_period));
             }
         }
     }
